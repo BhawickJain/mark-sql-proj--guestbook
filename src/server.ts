@@ -3,6 +3,7 @@ import cors from "cors";
 import { Client } from "pg";
 import { getAllSignatures } from "./getAllSignatures";
 import { getSignatureById } from "./getSignatureById";
+import { createSignature } from "./createSignature";
 
 //As your database is on your local machine, with default port,
 //and default username and password,
@@ -42,7 +43,6 @@ app.get("/signatures/:id", async (req, res) => {
   //  see documentation: https://expressjs.com/en/guide/routing.html
   const id = parseInt(req.params.id); // params are always string type
 
-  //FIXME-TASK get the signature row from the db (match on id)
   const signature = await getSignatureById(req.params.id,  client);   
 
   if (signature) {
@@ -65,7 +65,8 @@ app.get("/signatures/:id", async (req, res) => {
 app.post("/signatures", async (req, res) => {
   const { name, message } = req.body;
   if (typeof name === "string") {
-    const createdSignature = null; //FIXME-TASK: insert the supplied signature object into the DB
+    //FIXME-TASK: insert the supplied signature object into the DB  
+    const createdSignature = await createSignature(name, message, client); 
 
     res.status(201).json({
       status: "success",
