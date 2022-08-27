@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { Client } from "pg";
+import { getAllSignatures } from "./getAllSignatures";
 
 //As your database is on your local machine, with default port,
 //and default username and password,
@@ -26,7 +27,7 @@ app.use(express.json());
 
 //When this route is called, return the most recent 100 signatures in the db
 app.get("/signatures", async (req, res) => {
-  const signatures = null; //FIXME-TASK: get signatures from db!
+  const signatures = getAllSignatures(client)
   res.status(200).json({
     status: "success",
     data: {
