@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import { Client } from "pg";
 import { getAllSignatures } from "./getAllSignatures";
+import { getSignatureById } from "./getSignatureById";
 
 //As your database is on your local machine, with default port,
 //and default username and password,
@@ -27,7 +28,7 @@ app.use(express.json());
 
 //When this route is called, return the most recent 100 signatures in the db
 app.get("/signatures", async (req, res) => {
-  const signatures = getAllSignatures(client)
+  const signatures = await getAllSignatures(client)
   res.status(200).json({
     status: "success",
     data: {
@@ -41,7 +42,8 @@ app.get("/signatures/:id", async (req, res) => {
   //  see documentation: https://expressjs.com/en/guide/routing.html
   const id = parseInt(req.params.id); // params are always string type
 
-  const signature = null;   //FIXME-TASK get the signature row from the db (match on id)
+  //FIXME-TASK get the signature row from the db (match on id)
+  const signature = await getSignatureById(req.params.id,  client);   
 
   if (signature) {
     res.status(200).json({
