@@ -4,6 +4,7 @@ import { Client } from "pg";
 import { getAllSignatures } from "./getAllSignatures";
 import { getSignatureById } from "./getSignatureById";
 import { createSignature } from "./createSignature";
+import { updateSignature } from "./updateSignature";
 
 //As your database is on your local machine, with default port,
 //and default username and password,
@@ -90,7 +91,7 @@ app.put("/signatures/:id", async (req, res) => {
   const id = parseInt(req.params.id);
   if (typeof name === "string") {
 
-    const result: any = null; //FIXME-TASK: update the signature with given id in the DB.
+    const result: any = await updateSignature(id, name, message, client);
 
     if (result.rowCount === 1) {
       const updatedSignature = result.rows[0];
