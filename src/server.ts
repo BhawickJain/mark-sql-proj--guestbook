@@ -5,6 +5,7 @@ import { getAllSignatures } from "./getAllSignatures";
 import { getSignatureById } from "./getSignatureById";
 import { createSignature } from "./createSignature";
 import { updateSignature } from "./updateSignature";
+import { deleteSignatureById } from "./deleteSignatureById";
 
 //As your database is on your local machine, with default port,
 //and default username and password,
@@ -123,7 +124,7 @@ app.put("/signatures/:id", async (req, res) => {
 app.delete("/signatures/:id", async (req, res) => {
   const id = parseInt(req.params.id); // params are string type
 
-  const queryResult: any = null; ////FIXME-TASK: delete the row with given id from the db  
+  const queryResult: any = await deleteSignatureById(id, client); ////FIXME-TASK: delete the row with given id from the db  
   const didRemove = queryResult.rowCount === 1;
 
   if (didRemove) {
