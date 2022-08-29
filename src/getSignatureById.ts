@@ -8,6 +8,7 @@ export async function getSignatureById(id: string, client: Client): Promise<any[
     // parameter substitution code which detects alterations to the over
     // all query given an input.
     // So it is not a naive substitution!
+    // https://node-postgres.com/features/queries
     const {rows} = await client.query(query)
     
     return rows.length > 0 ? rows : null
